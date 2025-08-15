@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+hyperliquid-python-sdk
+fastapi-limiter
+redis

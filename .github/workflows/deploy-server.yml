@@ -1,0 +1,54 @@
+name: Deploy Payou Server to Google Cloud Run
+
+on: 
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }} # Replace with your GCP Project ID
+  SERVICE_NAME: payou-server # Replace with your desired service name
+  REGION: us-central1 # Replace with your desired GCP region
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r server/requirements.txt
+
+      # Add a step for running tests here when they are implemented
+      # - name: Run tests
+      #   run: pytest
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and Push Docker Image
+        run: |
+          gcloud auth configure-docker
+          docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest ./server
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image gcr.io/$PROJECT_ID/$SERVICE_NAME:latest \
+            --region $REGION \
+            --platform managed \
+            --allow-unauthenticated # Adjust as needed for authentication
+            # --set-env-vars ENV_VAR_NAME=ENV_VAR_VALUE # Add environment variables here
