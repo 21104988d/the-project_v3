@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_project_v3/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:the_project_v3/features/auth/presentation/pages/signup_page.dart';
 import 'package:the_project_v3/features/wallet/presentation/pages/wallet_page.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

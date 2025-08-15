@@ -3,6 +3,7 @@ import 'package:the_project_v3/core/errors/failures.dart';
 import 'package:the_project_v3/features/wallet/data/datasources/wallet_local_data_source.dart';
 import 'package:the_project_v3/features/wallet/domain/entities/wallet.dart';
 import 'package:the_project_v3/features/wallet/domain/repositories/wallet_repository.dart';
+import 'package:the_project_v3/features/wallet/domain/entities/transaction.dart';
 
 class WalletRepositoryImpl implements WalletRepository {
   final WalletLocalDataSource localDataSource;

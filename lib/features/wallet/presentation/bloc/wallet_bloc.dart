@@ -5,23 +5,30 @@ import 'package:the_project_v3/features/wallet/domain/entities/wallet.dart';
 import 'package:the_project_v3/features/wallet/domain/usecases/create_wallet.dart';
 import 'package:the_project_v3/features/wallet/domain/usecases/import_wallet.dart';
 
+import 'package:the_project_v3/features/wallet/domain/usecases/get_transaction_history.dart';
+import 'package:the_project_v3/features/wallet/domain/usecases/get_wallet_balance.dart';
+
 part 'wallet_event.dart';
 part 'wallet_state.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final CreateWallet createWallet;
   final ImportWallet importWallet;
+  final GetWalletBalance getWalletBalance;
+  final GetTransactionHistory getTransactionHistory;
 
   WalletBloc({
     required this.createWallet,
     required this.importWallet,
+    required this.getWalletBalance,
+    required this.getTransactionHistory,
   }) : super(WalletInitial()) {
     on<CreateWalletEvent>((event, emit) async {
       emit(WalletLoading());
       final failureOrWallet = await createWallet(NoParams());
       failureOrWallet.fold(
         (failure) => emit(WalletError('Failed to create wallet')),
-        (wallet) => emit(WalletLoaded(wallet)),
+        (wallet) => emit(WalletLoaded(wallet, [])),
       );
     });
     on<ImportWalletEvent>((event, emit) async {

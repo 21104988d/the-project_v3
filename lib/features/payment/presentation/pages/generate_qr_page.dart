@@ -28,7 +28,7 @@ class _GenerateQrPageState extends State<GenerateQrPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_qrData != null)
-                  QrImage(
+                  QrImageView(
                     data: _qrData!,
                     version: QrVersions.auto,
                     size: 200.0,

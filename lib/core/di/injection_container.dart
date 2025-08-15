@@ -12,6 +12,15 @@ import 'package:the_project_v3/features/wallet/domain/usecases/get_transaction_h
 import 'package:the_project_v3/features/wallet/domain/usecases/get_wallet_balance.dart';
 import 'package:the_project_v3/features/wallet/domain/usecases/import_wallet.dart';
 import 'package:the_project_v3/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:the_project_v3/features/auth/domain/repositories/auth_repository.dart';
+import 'package:the_project_v3/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:the_project_v3/features/payment/domain/repositories/payment_repository.dart';
+import 'package:the_project_v3/features/payment/data/repositories/payment_repository_impl.dart';
+import 'package:the_project_v3/features/payment/data/datasources/payment_remote_data_source.dart';
+import 'package:the_project_v3/features/payment/data/datasources/payment_remote_data_source_impl.dart';
+import 'package:the_project_v3/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:the_project_v3/features/auth/data/datasources/auth_remote_data_source_impl.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final sl = GetIt.instance;
 
@@ -40,6 +49,11 @@ void init() {
   );
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<PaymentRepository>(
+    () => PaymentRepositoryImpl(
       remoteDataSource: sl(),
     ),
   );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_project_v3/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:the_project_v3/features/auth/presentation/pages/kyc_page.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);

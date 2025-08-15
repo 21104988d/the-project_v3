@@ -1,3 +1,5 @@
+import 'package:the_project_v3/features/wallet/domain/entities/transaction.dart' as WalletTransaction;
+import 'package:the_project_v3/features/payment/domain/entities/transaction.dart' as PaymentTransaction;
 part of 'wallet_bloc.dart';
 
 abstract class WalletState extends Equatable {
@@ -13,7 +15,7 @@ class WalletLoading extends WalletState {}
 
 class WalletLoaded extends WalletState {
   final Wallet wallet;
-  final List<Transaction> transactions;
+  final List<WalletTransaction.Transaction> transactions;
 
   const WalletLoaded(this.wallet, this.transactions);
 

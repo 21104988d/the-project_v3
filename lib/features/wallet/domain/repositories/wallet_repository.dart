@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:the_project_v3/features/wallet/domain/entities/wallet.dart';
 import 'package:the_project_v3/core/errors/failures.dart';
+import 'package:the_project_v3/features/wallet/domain/entities/transaction.dart';
 
 abstract class WalletRepository {
   Future<Either<Failure, Wallet>> createWallet();
