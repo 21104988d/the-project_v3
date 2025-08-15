@@ -1,0 +1,60 @@
+name: the_project_v3
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+
+  # State Management
+  flutter_bloc: ^8.1.2
+
+  # Blockchain
+  web3dart: ^2.6.1
+
+  # Secure Storage
+  flutter_secure_storage: ^8.0.0
+
+  # UI
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^1.1.6
+  page_transition: ^2.0.9
+
+  # Security
+  flutter_jailbreak_detection: ^1.7.0
+  http_certificate_pinning: ^3.0.1
+
+  # KYC
+  idenfy_sdk_flutter: ^2.0.0
+
+  # QR Code
+  qr_flutter: ^4.0.0
+  qr_code_scanner: ^1.0.1
+
+  # Environment variables
+  flutter_dotenv: ^5.0.2
+
+  # Service Locator
+  get_it: ^7.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
