@@ -22,7 +22,7 @@ Future<void> main() async {
     SystemNavigator.pop();
   }
 
-  await CertificatePinning.init();
+  // await CertificatePinning.init();
 
   runApp(const MyApp());
 }
@@ -32,23 +32,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Payou',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => di.sl<AuthBloc>(),
-          ),
-          BlocProvider(
-            create: (_) => di.sl<WalletBloc>(),
-          ),
-          BlocProvider(
-            create: (_) => di.sl<PaymentBloc>(),
-          ),
-        ],
-        child: const LoginPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => di.sl<AuthBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<WalletBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<PaymentBloc>(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Payou',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        home: const LoginPage(),
       ),
     );
   }

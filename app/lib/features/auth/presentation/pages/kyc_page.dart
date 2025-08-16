@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:idenfy_sdk_flutter/idenfy_sdk_flutter.dart';
 
-class KycPage extends StatefulWidget {
+class KycPage extends StatelessWidget {
   const KycPage({Key? key}) : super(key: key);
-
-  @override
-  _KycPageState createState() => _KycPageState();
-}
-
-class _KycPageState extends State<KycPage> {
-  IdenfyIdentificationResult? _idenfyIdentificationResult;
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +14,12 @@ class _KycPageState extends State<KycPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () async {
-                final result = await IdenfySdkFlutter.start(
-                  IdenfyIdentificationData(
-                    authToken: 'your_auth_token', // TODO: Replace with your auth token
-                  ),
-                );
-                setState(() {
-                  _idenfyIdentificationResult = result;
-                });
+              onPressed: () {
+                // TODO: Implement KYC logic here
+                print('Start KYC button pressed');
               },
               child: const Text('Start KYC'),
             ),
-            if (_idenfyIdentificationResult != null)
-              Text('KYC Result: ${_idenfyIdentificationResult!.identificationStatus}'),
           ],
         ),
       ),

@@ -22,10 +22,20 @@ import 'package:the_project_v3/features/auth/data/datasources/auth_remote_data_s
 import 'package:the_project_v3/features/auth/data/datasources/auth_remote_data_source_impl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:the_project_v3/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:the_project_v3/features/payment/presentation/bloc/payment_bloc.dart';
+import 'package:the_project_v3/features/auth/domain/usecases/sign_in.dart';
+import 'package:the_project_v3/features/auth/domain/usecases/sign_up.dart';
+import 'package:the_project_v3/features/auth/domain/usecases/sign_out.dart';
+import 'package:the_project_v3/features/payment/domain/usecases/send_transaction.dart';
+
 final sl = GetIt.instance;
 
 void init() {
+  print("Initializing dependencies...");
+
   // BLoC
+  print("Registering BLoCs...");
   sl.registerFactory(
     () => WalletBloc(
       createWallet: sl(),
@@ -34,14 +44,32 @@ void init() {
       getTransactionHistory: sl(),
     ),
   );
+  sl.registerFactory(
+    () => AuthBloc(
+      signIn: sl(),
+      signUp: sl(),
+      signOut: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => PaymentBloc(
+      sendTransaction: sl(),
+    ),
+  );
 
   // Use cases
+  print("Registering use cases...");
   sl.registerLazySingleton(() => CreateWallet(sl()));
   sl.registerLazySingleton(() => ImportWallet(sl()));
   sl.registerLazySingleton(() => GetWalletBalance(sl()));
   sl.registerLazySingleton(() => GetTransactionHistory(sl()));
+  sl.registerLazySingleton(() => SignIn(sl()));
+  sl.registerLazySingleton(() => SignUp(sl()));
+  sl.registerLazySingleton(() => SignOut(sl()));
+  sl.registerLazySingleton(() => SendTransaction(sl()));
 
   // Repository
+  print("Registering repositories...");
   sl.registerLazySingleton<WalletRepository>(
     () => WalletRepositoryImpl(
       localDataSource: sl(),
@@ -59,6 +87,7 @@ void init() {
   );
 
   // Data sources
+  print("Registering data sources...");
   sl.registerLazySingleton<WalletLocalDataSource>(
     () => WalletLocalDataSourceImpl(
       secureStorage: sl(),
@@ -76,7 +105,10 @@ void init() {
   );
 
   // External
+  print("Registering external dependencies...");
   sl.registerLazySingleton(() => const FlutterSecureStorage());
   sl.registerLazySingleton(() => Web3Client(sl(), http.Client()));
   sl.registerLazySingleton(() => dotenv.env['L2_RPC_URL']!);
+
+  print("All dependencies initialized.");
 }

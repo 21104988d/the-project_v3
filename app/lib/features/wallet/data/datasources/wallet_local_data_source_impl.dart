@@ -2,12 +2,13 @@ import 'dart:math';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:the_project_v3/features/wallet/data/datasources/wallet_local_data_source.dart';
+import 'package:the_project_v3/features/wallet/domain/entities/transaction.dart';
 import 'package:the_project_v3/features/wallet/domain/entities/wallet.dart';
-import 'package:web3dart/web3dart.dart';
+import 'package:web3dart/web3dart.dart' as web3dart_pkg;
 
 class WalletLocalDataSourceImpl implements WalletLocalDataSource {
   final FlutterSecureStorage secureStorage;
-  final Web3Client web3client;
+  final web3dart_pkg.Web3Client web3client;
 
   WalletLocalDataSourceImpl({
     required this.secureStorage,
@@ -17,7 +18,7 @@ class WalletLocalDataSourceImpl implements WalletLocalDataSource {
   @override
   Future<Wallet> createWallet() async {
     final rng = Random.secure();
-    final credentials = EthPrivateKey.createRandom(rng);
+    final credentials = web3dart_pkg.EthPrivateKey.createRandom(rng);
     final address = await credentials.extractAddress();
     final privateKey = credentials.privateKey.toString();
     final publicKey = credentials.publicKey.toString();
@@ -26,12 +27,13 @@ class WalletLocalDataSourceImpl implements WalletLocalDataSource {
       address: address.hex,
       privateKey: privateKey,
       publicKey: publicKey,
+      balance: 0.0,
     );
   }
 
   @override
   Future<Wallet> importWallet(String privateKey) async {
-    final credentials = EthPrivateKey.fromHex(privateKey);
+    final credentials = web3dart_pkg.EthPrivateKey.fromHex(privateKey);
     final address = await credentials.extractAddress();
     final publicKey = credentials.publicKey.toString();
 
@@ -39,6 +41,7 @@ class WalletLocalDataSourceImpl implements WalletLocalDataSource {
       address: address.hex,
       privateKey: privateKey,
       publicKey: publicKey,
+      balance: 0.0,
     );
   }
 
